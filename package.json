@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "index": "node index.js",
-    "par-ou-impar": "node par-ou impar.js",
-    "pedra-papel-tesoura": "node pedra-papel tesoura.js",
-    "process-argv": "clear && node exercicios/process-argv.js"
+    "start": "tsc && node ./build/index.js",
+    "index": "node index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Jordana",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.5.9",
+    "typescript": "^5.2.2"
+  }
 }
