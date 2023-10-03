@@ -24,7 +24,13 @@ PRAGMA table_info('users');
 --createUser
 
 INSERT INTO
-    users (id, name, email, password, created_at)
+    users (
+        id,
+        name,
+        email,
+        password,
+        created_at
+    )
 VALUES (
         'u01',
         'Belchior',
@@ -144,7 +150,7 @@ SET
     name = 'teste',
     price = 300,
     description = 'testando a edição do produto',
-    image_url = 'https://picsum.photos/200',
+    image_url = 'https://picsum.photos/200'
 WHERE id = 'prod01';
 
 --deleteProductById
@@ -154,3 +160,44 @@ DELETE FROM products WHERE id = 'prod01';
 --deleta a tabela inteira
 
 DROP TABLE products;
+
+--PEDIDOS
+
+--Cria tabela
+
+CREATE TABLE
+    purchases (
+        id TEXT PRIMARY KEY UNIQUE NOT NULL,
+        buyer TEXT NOT NULL,
+        total_price REAL NOT NULL,
+        created_at TEXT NOT NULL,
+        FOREIGN KEY (buyer) REFERENCES users(id)
+    );
+
+INSERT INTO
+    purchases (id, buyer, total_price, created_at)
+VALUES ('prc001', 'u01', 680, datetime('now')), ('prc002', 'u02', 700, datetime('now')), ('prc003', 'u03', 850, datetime('now'));
+
+--GetPurchases
+
+SELECT * FROM purchases;
+
+--JOIN purchases X users
+
+SELECT
+    users.id AS idUser,
+    purchases.id AS idCompra,
+    users.name AS nome,
+    users.email,
+    purchases.total_price AS precoTotal,
+    purchases.created_at AS data
+FROM purchases
+    INNER JOIN users ON purchases.buyer = users.id;
+
+--edit-purchase
+
+UPDATE purchases SET total_price = 780 WHERE id = 'prc001';
+
+--Deleta-tabela-purchases
+
+DROP TABLE purchases;
