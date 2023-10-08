@@ -172,6 +172,8 @@ CREATE TABLE
         total_price REAL NOT NULL,
         created_at TEXT NOT NULL,
         FOREIGN KEY (buyer) REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
     );
 
 INSERT INTO
@@ -201,3 +203,43 @@ UPDATE purchases SET total_price = 780 WHERE id = 'prc001';
 --Deleta-tabela-purchases
 
 DROP TABLE purchases;
+
+--createTable (relação purchases x products)
+
+CREATE TABLE purchases_products (
+    purchase_id TEXT NOT NULL,
+    product_id TEXT NOT NULL,
+    quantity INTEGER NOT NULL,
+    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+    );
+
+--GetPurchases  
+SELECT * FROM purchases_products;
+
+--relação purchases x products
+
+INSERT INTO purchases_products (purchase_id, product_id, quantity)
+VALUES
+('prc001', 'prod03', 2),
+('prc002', 'prod02', 5),
+('prc003', 'prod04', 1);
+
+SELECT
+purchases.id AS purchaseId,
+products.id AS productId,
+products.name AS productName,
+quantity,
+purchases.buyer AS purchaseBuyer
+FROM purchases_products
+INNER JOIN purchases
+ON purchases_products.purchase_id = purchases.id
+INNER JOIN products
+ON purchases_products.product_id = products.id;
+
+--Deleta-purchases_products
+
+DROP TABLE purchases_products;
+
