@@ -1,4 +1,3 @@
-import { products, users } from "./database";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import { db } from "./database/knex";
