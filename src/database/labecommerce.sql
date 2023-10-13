@@ -1,4 +1,4 @@
--- Active: 1695686983793@@127.0.0.1@3306
+-- Active: 1697060876673@@127.0.0.1@3306
 
 -- USERS
 
@@ -16,10 +16,6 @@ CREATE TABLE
 --GetAllUsers
 
 SELECT * FROM users;
-
---retorna estrutura da TABLESPACE
-
-PRAGMA table_info('users');
 
 --createUser
 
@@ -55,15 +51,19 @@ VALUES (
         'brianna@email.com',
         '123',
         date ('now')
+    ), (
+        'u05',
+        'Cícero',
+        'cicero@email.com',
+        '123',
+        date ('now')
+    ), (
+        'u06',
+        'Frajola',
+        'frajola@email.com',
+        '123',
+        date ('now')
     );
-
---editUserById
-
-UPDATE users SET email = 'belchorzinho@email.com' WHERE id = 'u01';
-
---deleteUserById
-
-DELETE FROM users WHERE id = 'u01';
 
 --deleta tabela
 
@@ -85,18 +85,6 @@ CREATE TABLE
 --getAllProducts
 
 SELECT * FROM products;
-
---getProductsById
-
-SELECT * FROM products WHERE id = 'prod03';
-
---getProductsByName
-
-SELECT * FROM products WHERE name LIKE '%meia%';
-
---retorna estrutura da tabela
-
-PRAGMA table_info('products');
 
 --adiciona itens na tabela
 
@@ -138,24 +126,25 @@ VALUES (
         175,
         'O melhor tênis do mundo!',
         'https://picsum.photos/200'
+    ), (
+        'prod06',
+        'Almofada',
+        55,
+        'A melhor almofada do mundo!',
+        'https://picsum.photos/200'
+    ), (
+        'prod07',
+        'Adesivo',
+        15,
+        'O melhor adesivo do mundo!',
+        'https://picsum.photos/200'
+    ), (
+        'prod08',
+        'Caneta',
+        7,
+        'A melhor caneta do mundo!',
+        'https://picsum.photos/200'
     );
-
---editProductById
-
-UPDATE products SET price = 80 WHERE id = 'prod02';
-
-UPDATE products
-SET
-    id = 'prodtesteprod',
-    name = 'teste',
-    price = 300,
-    description = 'testando a edição do produto',
-    image_url = 'https://picsum.photos/200'
-WHERE id = 'prod01';
-
---deleteProductById
-
-DELETE FROM products WHERE id = 'prod01';
 
 --deleta a tabela inteira
 
@@ -171,14 +160,32 @@ CREATE TABLE
         buyer TEXT NOT NULL,
         total_price REAL NOT NULL,
         created_at TEXT NOT NULL,
-        FOREIGN KEY (buyer) REFERENCES users(id)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+        FOREIGN KEY (buyer) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE
     );
 
 INSERT INTO
-    purchases (id, buyer, total_price, created_at)
-VALUES ('prc001', 'u01', 680, datetime('now')), ('prc002', 'u02', 700, datetime('now')), ('prc003', 'u03', 850, datetime('now'));
+    purchases (
+        id,
+        buyer,
+        total_price,
+        created_at
+    )
+VALUES (
+        'prc001',
+        'u01',
+        680,
+        datetime('now')
+    ), (
+        'prc002',
+        'u02',
+        700,
+        datetime('now')
+    ), (
+        'prc003',
+        'u03',
+        850,
+        datetime('now')
+    );
 
 --GetPurchases
 
@@ -186,60 +193,35 @@ SELECT * FROM purchases;
 
 --JOIN purchases X users
 
-SELECT
-    users.id AS idUser,
-    purchases.id AS idCompra,
-    users.name AS nome,
-    users.email,
-    purchases.total_price AS precoTotal,
-    purchases.created_at AS data
-FROM purchases
-    INNER JOIN users ON purchases.buyer = users.id;
-
---edit-purchase
-
-UPDATE purchases SET total_price = 780 WHERE id = 'prc001';
-
 --Deleta-tabela-purchases
 
 DROP TABLE purchases;
 
 --createTable (relação purchases x products)
 
-CREATE TABLE purchases_products (
-    purchase_id TEXT NOT NULL,
-    product_id TEXT NOT NULL,
-    quantity INTEGER NOT NULL,
-    FOREIGN KEY (purchase_id) REFERENCES purchases(id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
+CREATE TABLE
+    purchases_products (
+        purchase_id TEXT NOT NULL,
+        product_id TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        FOREIGN KEY (purchase_id) REFERENCES purchases(id),
+        FOREIGN KEY (product_id) REFERENCES products(id) ON UPDATE CASCADE ON DELETE CASCADE
     );
 
---GetPurchases  
+--GetPurchases
+
 SELECT * FROM purchases_products;
 
 --relação purchases x products
 
-INSERT INTO purchases_products (purchase_id, product_id, quantity)
-VALUES
-('prc001', 'prod03', 2),
-('prc002', 'prod02', 5),
-('prc003', 'prod04', 1);
-
-SELECT
-purchases.id AS purchaseId,
-products.id AS productId,
-products.name AS productName,
-quantity,
-purchases.buyer AS purchaseBuyer
-FROM purchases_products
-INNER JOIN purchases
-ON purchases_products.purchase_id = purchases.id
-INNER JOIN products
-ON purchases_products.product_id = products.id;
+INSERT INTO
+    purchases_products (
+        purchase_id,
+        product_id,
+        quantity
+    )
+VALUES ('prc001', 'prod03', 2), ('prc002', 'prod02', 5), ('prc003', 'prod04', 1);
 
 --Deleta-purchases_products
 
 DROP TABLE purchases_products;
-
