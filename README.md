@@ -1,17 +1,20 @@
 <h1 align="center"> LabeCommerce </h1>
 
 <h4 align="center"> 
-    :construction:  Projeto em construção  :construction:
+    :dancers:  Projeto Finalizado!  :dancers:
 </h4>
 Projeto desenvolvido a fins de aprendizado focado no *back-end* e *API*.
 
 Ferramentas que foram usadas na construção do projeto:
 
-- [Expo](https://expo.io/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
-- [TypeScript](https://www.typescriptlang.org/)
+**1-** NodeJS;
+**2-** Typescript;
+**3-** SQL;
+**4-** SQLite;
+**5-** Express;
+**6-** Knex;
+**7-** Postman;
+
 
 **Documentação POSTMAN:**
 https://documenter.getpostman.com/view/28294826/2s9YJW5kiC
