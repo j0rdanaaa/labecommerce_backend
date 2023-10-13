@@ -1,0 +1,27 @@
+GET http://localhost:3003/users
+
+###
+
+POST  http://localhost:3003/users
+###
+
+GET http://localhost:3003/products
+###
+
+POST http://localhost:3003/products
+###
+
+PUT http://localhost:3003/products/:id
+###
+
+DEL http://localhost:3003/products/:id
+###
+
+POST http://localhost:3003/purchases
+###
+
+GET http://localhost:3003/purchases/:id
+###
+
+DEL http://localhost:3003/purchases/:id
+###
